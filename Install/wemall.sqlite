@@ -326,7 +326,8 @@ INSERT INTO `wemall_wxmessage` (`id`, `type`, `title`, `description`, `savepath`
 -- Indexes for table `wemall_access`
 --
 -- ALTER TABLE `wemall_access` ADD KEY `groupId` (`role_id`), ADD KEY `nodeId` (`node_id`);
-
+CREATE INDEX `access_groupId_index` ON wemall_access (`role_id`);
+CREATE INDEX `access_nodeId_index` ON wemall_access (`node_id`);
 --
 -- Indexes for table `wemall_admin`
 --
@@ -361,6 +362,10 @@ INSERT INTO `wemall_wxmessage` (`id`, `type`, `title`, `description`, `savepath`
 -- Indexes for table `wemall_node`
 --
 -- ALTER TABLE `wemall_node` ADD PRIMARY KEY (`id`), ADD KEY `level` (`level`), ADD KEY `pid` (`pid`), ADD KEY `status` (`status`), ADD KEY `name` (`name`);
+CREATE INDEX `node_level_index` ON wemall_node (`level`);
+CREATE INDEX `node_pid_index` ON wemall_node (`pid`);
+CREATE INDEX `node_status_index` ON wemall_node (`status`);
+CREATE INDEX `node_name_index` ON wemall_node (`name`);
 
 --
 -- Indexes for table `wemall_order`
@@ -371,11 +376,15 @@ INSERT INTO `wemall_wxmessage` (`id`, `type`, `title`, `description`, `savepath`
 -- Indexes for table `wemall_role`
 --
 -- ALTER TABLE `wemall_role` ADD PRIMARY KEY (`id`), ADD KEY `pid` (`pid`), ADD KEY `status` (`status`);
+CREATE INDEX `role_pid_index` ON wemall_role (`pid`);
+CREATE INDEX `role_status_index` ON wemall_role (`status`);
 
 --
 -- Indexes for table `wemall_role_user`
 --
 -- ALTER TABLE `wemall_role_user` ADD KEY `group_id` (`role_id`), ADD KEY `user_id` (`admin_id`);
+CREATE INDEX `role_user_group_id_index` ON wemall_role_user (`role_id`);
+CREATE INDEX `role_user_admin_id_index` ON wemall_role_user (`admin_id`);
 
 --
 -- Indexes for table `wemall_user`
