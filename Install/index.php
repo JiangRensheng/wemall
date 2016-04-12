@@ -16,7 +16,7 @@ header('Content-Type: text/html; charset=utf-8');
 define('SITEDIR', _dir_path(substr(dirname(__FILE__), 0, -8)));
 
 define("VERSION", date('Y-m-d').'http://wemall.duapp.com');
-$sqlFile = 'wemall.sql';
+$sqlFile = 'wemall.sqlite';
 $configFile = 'config.php';
 
 if (!file_exists(SITEDIR . 'Install/' . $sqlFile)) {
@@ -73,10 +73,12 @@ switch ($step) {
         } else {
             $gd = '<font color=green>[√]On</font> ' . $tmp['GD Version'];
         }
-        if (function_exists('mysql_connect')) {
+
+        $tmp = SQLite3::version();
+        if (!empty($tmp['versionString'])) {
             $mysql = '<span class="correct_span">√</span> 已安装';
         } else {
-            $mysql = '<span class="correct_span error_span">√</span> 出现错误';
+            $mysql = '<span class="correct_span error_span">√</span> 出现xx错误';
             $err++;
         }
         if (ini_get('file_uploads')) {

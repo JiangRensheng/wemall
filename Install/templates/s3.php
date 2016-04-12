@@ -26,24 +26,9 @@
                                 <td class="td1">&nbsp;</td>
                             </tr>
                             <tr>
-                                <td class="tar">数据库服务器：</td>
-                                <td><input type="text" name="dbhost" id="dbhost" value="localhost" class="input"></td>
-                                <td><div id="J_install_tip_dbhost"><span class="gray">数据库服务器地址，一般为localhost</span></div></td>
-                            </tr>
-                            <tr>
-                                <td class="tar">数据库端口：</td>
-                                <td><input type="text" name="dbport" id="dbport" value="3306" class="input"></td>
-                                <td><div id="J_install_tip_dbport"><span class="gray">数据库服务器端口，一般为3306</span></div></td>
-                            </tr>
-                            <tr>
-                                <td class="tar">数据库用户名：</td>
-                                <td><input type="text" name="dbuser" id="dbuser" value="" class="input"></td>
-                                <td><div id="J_install_tip_dbuser"></div></td>
-                            </tr>
-                            <tr>
-                                <td class="tar">数据库密码：</td>
-                                <td><input type="text" name="dbpw" id="dbpw" value="" class="input" autoComplete="off" onBlur="TestDbPwd()"></td>
-                                <td><div id="J_install_tip_dbpw"></div></td>
+                                <td class="tar">数据库目录：</td>
+                                <td><input type="text" name="dbhome" id="dbhome" value="/var/lib/sqlite" class="input"></td>
+                                <td><div id="J_install_tip_dbhome"></div></td>
                             </tr>
                             <tr>
                                 <td class="tar">数据库名：</td>
