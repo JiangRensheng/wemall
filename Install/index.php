@@ -76,9 +76,9 @@ switch ($step) {
 
         $tmp = SQLite3::version();
         if (!empty($tmp['versionString'])) {
-            $mysql = '<span class="correct_span">√</span> 已安装';
+            $mysql = '<span class="correct_span">√</span> ' . $tmp['versionString'];
         } else {
-            $mysql = '<span class="correct_span error_span">√</span> 出现xx错误';
+            $mysql = '<span class="correct_span error_span">√</span> 出现错误';
             $err++;
         }
         if (ini_get('file_uploads')) {
@@ -99,9 +99,10 @@ switch ($step) {
     case '3':
 
         if ($_GET['testdbpwd']) {
-            $dbHost = $_POST['dbHost'] . ':' . $_POST['dbPort'];
-            $conn = @mysql_connect($dbHost, $_POST['dbUser'], $_POST['dbPwd']);
-            die($conn ? "1" : "");
+            $dbpath = $_POST['dbhome'] . ':' . $_POST['dbname'];
+            $db = new SQLite3();
+            $db->open($dbpath);
+            die($db ? "1" : "");
         }
         include_once ("./templates/s3.php");
         exit();
@@ -116,6 +117,7 @@ switch ($step) {
         if (intval($_GET['install'])) {
             $dbHost = trim($_POST['dbhost']);
             $dbPort = trim($_POST['dbport']);
+            $dbHome = trim($_POST['dbhome']);
             $dbName = trim($_POST['dbname']);
             //$dbHost = empty($dbPort) || $dbPort == 3306 ? $dbHost : $dbHost . ':' . $dbPort;
             $dbUser = trim($_POST['dbuser']);
@@ -132,14 +134,10 @@ switch ($step) {
             $config['DB_USER'] = $dbUser;
             $config['DB_PWD'] = $dbPwd;
             $config['DB_PREFIX'] = $dbPrefix;  
-			$conn = @ mysql_connect($dbHost.":".$dbPort, $dbUser, $dbPwd);
-            
-            mysql_query("set names 'utf8'"); 
-            //创建数据库
-            if (!mysql_select_db($dbName , $conn)) {
-                mysql_query("CREATE DATABASE IF NOT EXISTS `" . $dbName . "` DEFAULT CHARACTER SET utf8;", $conn);
-            }
-            mysql_select_db($dbName , $conn);
+	    //$conn = @ mysql_connect($dbHost.":".$dbPort, $dbUser, $dbPwd);
+            $dbpath = $dbHome . "/" . $dbName;
+            $db = new SQLite3($dbpath);
+
             //读取数据文件
             $sqldata = file_get_contents(SITEDIR . 'Install/' . $sqlFile);
             $sqldata = str_replace('wemall_',$dbPrefix,$sqldata);
@@ -169,12 +167,12 @@ switch ($step) {
             for ($i = 0; $i < $counts; $i++) {
                 $sql = trim($sqlFormat[$i]);
 
-                if (strstr($sql, 'CREATE TABLE')) {
+                if (strstr($sql, 'CREATE TABLE IF NOT EXISTS')) {
                     preg_match('/CREATE TABLE IF NOT EXISTS `([^ ]*)`/', $sql, $matches);
-                    mysql_query("DROP TABLE IF EXISTS `$matches[1]");
-                    mysql_query($sql);
+                    $db->query("DROP TABLE IF EXISTS `$matches[1]");
+                    $db->query($sql);
                 } else {
-                    mysql_query($sql);
+                    $db->query($sql);
                 }
             }
             
@@ -182,7 +180,7 @@ switch ($step) {
            
             $dbPrefixadmin = $dbPrefix.'admin';
             $query = "INSERT INTO `$dbPrefixadmin` (`id`, `username`, `password`) VALUES (1, \"$username\", \"$password\")";
-            mysql_query($query);
+            $db->query($query);
         }
 
         include_once ("./templates/s4.php");
