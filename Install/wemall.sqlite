@@ -40,7 +40,7 @@ CREATE TABLE `wemall_access` (
 --
 
 CREATE TABLE `wemall_admin` (
-  `id` unsigned NOT NULL,
+  `id` unsigned NOT NULL PRIMARY KEY,
   `username` text NOT NULL,
   `password` text NOT NULL,
   `time` TimeStamp NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -59,7 +59,7 @@ INSERT INTO `wemall_admin` (`id`, `username`, `password`, `time`) VALUES  (1, 'a
 --
 
 CREATE TABLE `wemall_alipay` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL PRIMARY KEY,
   `alipayname` varchar(100) DEFAULT NULL,
   `partner` varchar(100) DEFAULT NULL,
   `key` varchar(100) DEFAULT NULL
@@ -79,7 +79,7 @@ INSERT INTO `wemall_alipay` (`id`, `alipayname`, `partner`, `key`) VALUES
 --
 
 CREATE TABLE `wemall_good` (
-  `id` unsigned NOT NULL,
+  `id` unsigned NOT NULL PRIMARY KEY,
   `menu_id` int NOT NULL,
   `sort` int NOT NULL,
   `name` text NOT NULL,
@@ -107,7 +107,7 @@ INSERT INTO `wemall_good` (`id`, `menu_id`, `sort`, `name`, `price`, `old_price`
 --
 
 CREATE TABLE `wemall_info` (
-  `id` unsigned NOT NULL,
+  `id` unsigned NOT NULL PRIMARY KEY,
   `name` text NOT NULL,
   `notification` text NOT NULL,
   `theme` text NOT NULL
@@ -127,7 +127,7 @@ INSERT INTO `wemall_info` (`id`, `name`, `notification`, `theme`) VALUES
 --
 
 CREATE TABLE `wemall_mail` (
-  `id` unsigned NOT NULL,
+  `id` unsigned NOT NULL PRIMARY KEY,
   `smtp` text NOT NULL,
   `username` text NOT NULL,
   `password` text NOT NULL,
@@ -141,7 +141,7 @@ CREATE TABLE `wemall_mail` (
 --
 
 CREATE TABLE `wemall_menu` (
-  `id` unsigned NOT NULL,
+  `id` unsigned NOT NULL PRIMARY KEY,
   `name` text NOT NULL,
   `pid` int NOT NULL
 );
@@ -161,7 +161,7 @@ INSERT INTO `wemall_menu` (`id`, `name`, `pid`) VALUES
 --
 
 CREATE TABLE `wemall_node` (
-  `id` unsigned NOT NULL,
+  `id` unsigned NOT NULL PRIMARY KEY,
   `name` varchar(20) NOT NULL,
   `title` varchar(50) DEFAULT NULL,
   `status` tinyint DEFAULT '0',
@@ -178,7 +178,7 @@ CREATE TABLE `wemall_node` (
 --
 
 CREATE TABLE `wemall_order` (
-  `id` unsigned NOT NULL,
+  `id` unsigned NOT NULL PRIMARY KEY,
   `user_id` int NOT NULL,
   `orderid` text NOT NULL,
   `totalprice` text NOT NULL,
@@ -204,7 +204,7 @@ INSERT INTO `wemall_order` (`id`, `user_id`, `orderid`, `totalprice`, `pay_style
 --
 
 CREATE TABLE `wemall_role` (
-  `id` unsigned NOT NULL,
+  `id` unsigned NOT NULL PRIMARY KEY,
   `name` varchar(20) NOT NULL,
   `pid` smallint DEFAULT NULL,
   `status` tinyint unsigned DEFAULT NULL,
@@ -229,7 +229,7 @@ CREATE TABLE `wemall_role_user` (
 --
 
 CREATE TABLE `wemall_user` (
-  `id` unsigned NOT NULL,
+  `id` unsigned NOT NULL PRIMARY KEY,
   `uid` text NOT NULL,
   `username` text NOT NULL,
   `phone` text NOT NULL,
@@ -252,7 +252,7 @@ INSERT INTO `wemall_user` (`id`, `uid`, `username`, `phone`, `password`, `addres
 --
 
 CREATE TABLE `wemall_wxconfig` (
-  `id` int(5) NOT NULL,
+  `id` int(5) NOT NULL PRIMARY KEY,
   `num` text NOT NULL,
   `token` text NOT NULL,
   `appid` text NOT NULL,
@@ -276,7 +276,7 @@ INSERT INTO `wemall_wxconfig` (`id`, `num`, `token`, `appid`, `appsecret`, `enco
 --
 
 CREATE TABLE `wemall_wxmenu` (
-  `id` int(5) NOT NULL,
+  `id` int(5) NOT NULL PRIMARY KEY,
   `type` varchar(10) DEFAULT NULL,
   `name` varchar(10) NOT NULL,
   `key` varchar(200) NOT NULL,
@@ -301,7 +301,7 @@ INSERT INTO `wemall_wxmenu` (`id`, `type`, `name`, `key`, `url`, `pid`, `listord
 --
 
 CREATE TABLE `wemall_wxmessage` (
-  `id` int unsigned NOT NULL,
+  `id` int unsigned NOT NULL PRIMARY KEY,
   `type` text NOT NULL,
   `title` text NOT NULL,
   `description` text NOT NULL,
@@ -330,7 +330,7 @@ INSERT INTO `wemall_wxmessage` (`id`, `type`, `title`, `description`, `savepath`
 --
 -- Indexes for table `wemall_admin`
 --
--- ALTER TABLE `wemall_admin` ADD PRIMARY KEY (`id`);
+--! ALTER TABLE `wemall_admin` ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `wemall_alipay`
