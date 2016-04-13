@@ -51,7 +51,7 @@ switch ($step) {
     case '2':
 
         if (phpversion() < 5) {
-            die('本系统需要PHP5+MYSQL >=4.1环境，当前PHP版本为：' . phpversion());
+            die('本系统需要PHP5+SQLite >=3.8环境，当前PHP版本为：' . phpversion());
         }
 
         $phpv = @ phpversion();
@@ -76,9 +76,9 @@ switch ($step) {
 
         $tmp = SQLite3::version();
         if (!empty($tmp['versionString'])) {
-            $mysql = '<span class="correct_span">√</span> ' . $tmp['versionString'];
+            $db = '<span class="correct_span">√</span> ' . $tmp['versionString'];
         } else {
-            $mysql = '<span class="correct_span error_span">√</span> 出现错误';
+            $db = '<span class="correct_span error_span">√</span> 出现错误';
             $err++;
         }
         if (ini_get('file_uploads')) {
@@ -115,26 +115,17 @@ switch ($step) {
         }
 
         if (intval($_GET['install'])) {
-            $dbHost = trim($_POST['dbhost']);
-            $dbPort = trim($_POST['dbport']);
             $dbHome = trim($_POST['dbhome']);
             $dbName = trim($_POST['dbname']);
-            //$dbHost = empty($dbPort) || $dbPort == 3306 ? $dbHost : $dbHost . ':' . $dbPort;
-            $dbUser = trim($_POST['dbuser']);
-            $dbPwd = trim($_POST['dbpw']);
             $dbPrefix = empty($_POST['dbprefix']) ? 'wemall_' : trim($_POST['dbprefix']);
             $username = trim($_POST['manager_email']);
             $password = md5( trim($_POST['manager_pwd']) );
 
-			$config = array();      
-			$config['DB_TYPE']='mysql';
-            $config['DB_HOST'] = $dbHost;
-            $config['DB_PORT'] = $dbPort;
+	    $config = array();      
+	    $config['DB_TYPE']='sqlite';
+            $config['DB_HOME'] = $dbHome;
             $config['DB_NAME'] = $dbName;
-            $config['DB_USER'] = $dbUser;
-            $config['DB_PWD'] = $dbPwd;
             $config['DB_PREFIX'] = $dbPrefix;  
-	    //$conn = @ mysql_connect($dbHost.":".$dbPort, $dbUser, $dbPwd);
             $dbpath = $dbHome . "/" . $dbName;
             $db = new SQLite3($dbpath);
 
@@ -148,11 +139,8 @@ switch ($step) {
             $configStr1 = fread($fp,filesize("./templates/config-template.php"));
             fclose($fp);
             
-            $configStr1 = str_replace("db_host",$dbHost,$configStr1);   //初始化数据库服务器
-            $configStr1 = str_replace("db_port", $dbPort, $configStr1);
+            $configStr1 = str_replace("db_home",$dbHome,$configStr1);   //初始化数据库服务器
             $configStr1 = str_replace("db_name",$dbName,$configStr1);       //初始化数据库名字
-            $configStr1 = str_replace("db_user",$dbUser,$configStr1);           //初始化数据库用户名
-            $configStr1 = str_replace("db_pwd",$dbPwd,$configStr1);         //初始化数据库密码
             $configStr1 = str_replace("db_prefix",$dbPrefix,$configStr1);           //初始化数据库表前缀
  
             $fp = fopen("../Public/Conf/config.php","w");
