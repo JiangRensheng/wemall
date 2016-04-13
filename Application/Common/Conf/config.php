@@ -28,11 +28,12 @@ $arr1 =  array(
 include './Public/Conf/config.php';
 
 $arr2 = array(
-	'DB_HOST'   => DB_HOST, // 服务器地址
-	'DB_NAME'   => DB_NAME, // 数据库名
-	'DB_USER'   => DB_USER, // 用户名
-	'DB_PWD'    => DB_PWD,  // 密码
-	'DB_PREFIX' => DB_PREFIX, // 数据库表前缀
+        'DB_TYPE'         => DB_TYPE,
+	'DB_DSN'          => DB_DSN, // 服务器地址
+	'DB_NAME'         => DB_NAME, // 数据库名
+	'DB_CHARSET'      => DB_CHARSET, // 用户名
+	'DB_FIELDS_CACHE' => DB_FIELDS_CACHE,  // 密码
+	'DB_PREFIX'       => DB_PREFIX, // 数据库表前缀
 );
 
 return array_merge($arr1 , $arr2);
